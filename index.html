@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clara Nascimento | Arquitetura & IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parchment: #FFFFFF;
+            --charcoal: #1A1A1A;
+            --brass: #AF9058;
+            --cursor-color: #AF9058;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--parchment);
+            color: var(--charcoal);
+            overflow-x: hidden;
+            cursor: none; /* Hide real cursor for the effect */
+        }
+        h1, h2, h3, h4, .serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .glass-morphism {
+            background: #000000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Architectural Cursor */
+        #custom-cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 0.5px solid var(--cursor-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out, background 0.3s ease;
+            mix-blend-mode: difference;
+        }
+        #custom-cursor::before, #custom-cursor::after {
+            content: '';
+            position: absolute;
+            background: var(--cursor-color);
+            opacity: 0.5;
+        }
+        #custom-cursor::before {
+            width: 100vw;
+            height: 0.5px;
+            left: -50vw;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        #custom-cursor::after {
+            height: 100vh;
+            width: 0.5px;
+            top: -50vh;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #cursor-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--cursor-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        .fade-in-section {
+            animation: fadeIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hover state for cursor */
+        .cursor-hover #custom-cursor {
+            transform: scale(1.5);
+            background: rgba(175, 144, 88, 0.1);
+        }
+
+        /* Elfsight Instagram Feed Custom Styles */
+        .es-post-media-image {
+            filter: grayscale(1) !important;
+            transition: filter 0.4s ease, transform 0.4s ease !important;
+            border-radius: 8px !important;
+        }
+        .es-post:hover .es-post-media-image {
+            filter: none !important;
+            transform: scale(1.05) !important;
+        }
+        
+        .es-pagination-dots { text-align: center; margin-top: 30px; }
+        .es-pagination-dots span { 
+            width: 8px; 
+            height: 8px; 
+            background: #ccc; 
+            border-radius: 50%; 
+            margin: 0 6px; 
+            display: inline-block; 
+            transition: background 0.3s; 
+        }
+        .es-pagination-dots .active { background: #333; }
+        .es-load-more { 
+            background: transparent !important; 
+            border: 1px solid #ccc !important; 
+            color: #333 !important; 
+            padding: 10px 20px !important; 
+            border-radius: 4px !important; 
+            font-size: 14px !important; 
+            margin: 30px auto 0 !important; 
+            display: block !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer;
+        }
+        .es-load-more:hover {
+            background: #333 !important;
+            color: #fff !important;
+            border-color: #333 !important;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="cursor-dot"></div>
+    <div id="root"></div>
+    <script>
+        const cursor = document.getElementById('custom-cursor');
+        const dot = document.getElementById('cursor-dot');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 20 + 'px';
+            cursor.style.top = e.clientY - 20 + 'px';
+            dot.style.left = e.clientX - 2 + 'px';
+            dot.style.top = e.clientY - 2 + 'px';
+        });
+
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                document.body.classList.add('cursor-hover');
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                document.body.classList.remove('cursor-hover');
+            }
+        });
+    </script>
+</body>
+</html>
